@@ -16,22 +16,26 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 
+app.get('/', (req, res) => {
+    res.send({message: 'Welcome to the support desk API'})
+})
 
 //routes
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/tickets', require('./routes/ticketRoutes'))
 
-// serve frontend
-if(process.env.NODE_ENV === 'production'){
-    // set build folder as static
-    app.use(express.static(path.join(__dirname, '../frontend/build')))
+// serve frontend - this is for the backend/frontend in the same file
 
-    app.get('*', (req, res) => res.sendFile(__dirname, '../', 'frontend', 'build', 'index.html'))
-} else {
-    app.get('/', (req, res) => {
-        res.send({message: 'Welcome to the support desk API'})
-    })
-}
+// if(process.env.NODE_ENV === 'production'){
+//     // set build folder as static
+//     app.use(express.static(path.join(__dirname, '../frontend/build')))
+
+//     app.get('*', (req, res) => res.sendFile(__dirname, '../', 'frontend', 'build', 'index.html'))
+// } else {
+//     app.get('/', (req, res) => {
+//         res.send({message: 'Welcome to the support desk API'})
+//     })
+// }
 
 app.use(errorHandler)
 
